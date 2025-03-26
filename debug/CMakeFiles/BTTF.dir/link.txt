@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/BTTF.dir/main.cpp.o CMakeFiles/BTTF.dir/explorer.cpp.o CMakeFiles/BTTF.dir/archiver.cpp.o -o BTTF  /usr/lib/x86_64-linux-gnu/libarchive.a -lz -lbz2 -llzma -liconv -lxml2 -lcrypto -lssl -lnettle -lacl 

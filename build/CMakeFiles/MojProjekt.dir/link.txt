@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/MojProjekt.dir/main.cpp.o -o MojProjekt  -lmoja_biblioteka 
