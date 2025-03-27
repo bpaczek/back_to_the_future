@@ -6,6 +6,8 @@
 #include <vector>
 #include <cstring> //for memset
 
+#include "explorer.h"
+
 #define DATA_BLOCK_SIZE 0x4000
         
 /* This class provides multiple constructors, allowing it to be used in different ways depending on changing requirements:
@@ -69,11 +71,6 @@ public:
      * allocated resources are released when the Archiver object is destroyed.
      */
     ~Impl() {
-        if (Archive) {
-            libarchive->archive_write_close(Archive);
-            libarchive->archive_write_free(Archive);
-        }
-
         if (Archive != nullptr) {
             libarchive->archive_write_close(Archive);
             libarchive->archive_write_free(Archive);

@@ -46,12 +46,13 @@ Status pack_mode(){
     debug_print("Selected item", entry.path());;
 
     /// Possible use of Archiver with Explorer
-    // Status status = Success;
-    // auto archive = Archiver(explorer, std::move(libarchive));
+    Status status = Success;
+    auto archive = Archiver(explorer, std::move(libarchive));
 
     /// Possible use of Archiver without Explorer
-    auto archive = new Archiver(DEFAULT_ARCHIVE_NAME, std::move(libarchive));
-    Status status = archive->ArchiveItem(entry);
+    // auto archive = new Archiver(DEFAULT_ARCHIVE_NAME, std::move(libarchive));
+    // Status status = archive->ArchiveItem(entry);
+    // delete archive;
 
     return status;
 }

@@ -201,9 +201,6 @@ Status Explorer::SelectItemToArchive(std::filesystem::directory_entry* location)
     return pImpl->SelectItemToArchive(location);
 }
 
-
-
-
-
-
-
+std::filesystem::directory_entry Explorer::GetLocation(){
+    return pImpl->GetLocation();
+}
