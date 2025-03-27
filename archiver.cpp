@@ -57,7 +57,7 @@ Archiver::Archiver(std::string filename){
  * 
  * @param explorer A pointer to an IExplorer instance used to retrieve the location to be archived.
  */
-Archiver::Archiver(IExplorer* explorer) : Archiver("default_archve.tar.gz"){
+Archiver::Archiver(IExplorer* explorer) : Archiver("default_archive.tar.gz"){
     ArchiveItem(explorer->GetLocation());
 }
 
