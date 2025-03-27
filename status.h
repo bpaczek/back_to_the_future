@@ -3,8 +3,11 @@
 
 enum Status{
     Success = 0,
-    CannotOpenFile = 1,
-    AccessFileFailed = 2,
+    CriticalError,
+    CannotOpenFile,
+    AccessFileFailed,
+    WriteFailed,
+    TooManyArgs
 };
 
 #endif

@@ -15,25 +15,24 @@ class Archiver{
         Archiver();
         Archiver(std::string filename);
         ~Archiver();
-        void AddFile(std::string location);
-        void AddFile(fs::directory_entry location);
-        void AddDirectory(fs::directory_entry location);
-        void ArchiveCurrentLocation();
+
         Status Extract(std::string location);
-        std::string getCurrentLocation();
-        void ArchiveItem(fs::directory_entry location);
+        Status ArchiveItem(fs::directory_entry location);
     private:
-        std::string CurrentLocation;
+        archive* Archive = NULL;
+        archive* ArchiveFile = NULL;
+
         std::ifstream FileWithArchive;
-        struct archive *a;
         std::string PathOfItemToArchive;
 
-        archive* ArchiveReader;
-        archive* ArchiveFile;
-
-    /* proteced methods */
-    protected:
+        Status AddFile(std::string location);
+        Status AddFile(fs::directory_entry location);
+        Status AddDirectory(fs::directory_entry location);
+        void ArchiveCurrentLocation();
+        std::string CutArchivePath(std::string path);
         Status ArchiveEntries(archive_entry* entry);
+
+        Status WriteData(std::string &location);
 };
 
 #endif
