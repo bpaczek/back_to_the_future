@@ -40,6 +40,80 @@ public:
     Impl(std::string location) : CurrentLocation(location) {}
 
     /**
+     * @brief Allows the user to select an item to archive or navigate the filesystem.
+     * @param location Pointer to store the selected location, if any.
+     * @return Status indicating the result of the operation (e.g., success or user exit).
+     */
+    Status SelectItemToArchive(std::filesystem::directory_entry* location){
+        Status status = Success;
+        auto selectedLocation = GetCurrentLocation();
+        uint32_t id = 0;
+        std::string x;
+    
+        do{
+            PrintHelp();
+            this->GetCurrentLocationContent();
+            std::cout << this->GetCurrentLocationPath() << ":" << std::endl;
+            this->PrintCurrentLocationContent();
+    
+            if (!(std::cin >> x)) {
+                std::cin.clear(); // Clear the error flag
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Discard invalid input
+                debug_print("Invalid input. Please try again.");
+                continue;
+            }
+    
+            if(x == "A"){
+                break;
+            }
+            else if(x == "X") {
+                debug_print("User requested exit.");   
+                status = UserExit;
+                break;
+            }
+            else {
+                try{
+                    int id_temp = std::stoi(x);
+                    if(id_temp < 0 || static_cast<size_t>(id_temp) >= this->LocationContent.size()) {
+                        debug_print("Invalid selection");
+                        continue;
+                    }
+                    id = static_cast<uint32_t>(id_temp);
+                } catch (const std::out_of_range& e) {
+                    debug_print("Invalid input: number out of range");
+                    continue;
+                } catch (const std::invalid_argument& e) {
+                    debug_print("Invalid input: not a number");
+                    continue;
+                } catch (const std::exception& e) {
+                    debug_print("Invalid input: ", e.what());
+                    continue;
+                }
+    
+                selectedLocation = GetLocationItembyId(id);
+                if(selectedLocation.is_directory()){
+                    MoveToLocation(selectedLocation);
+                }
+                else{
+                    debug_print("Selected item is a file: ", selectedLocation.path());
+                    break;
+                }
+            }
+        } while(true);
+    
+        SetCurrentLocation(selectedLocation);
+    
+        if(location != nullptr) *location = this->CurrentLocation;
+    
+        return status;
+    }
+
+    std::filesystem::directory_entry GetLocation() {
+        return this->CurrentLocation;
+    } 
+
+    private:
+    /**
      * @brief Sets the current location in the filesystem.
      * @param location The new current location.
      */
@@ -115,79 +189,6 @@ public:
         std::cout << "\tA - Archive current directory " << std::endl;
         std::cout << "\tX - Exit " << std::endl;
     }
-
-    /**
-     * @brief Allows the user to select an item to archive or navigate the filesystem.
-     * @param location Pointer to store the selected location, if any.
-     * @return Status indicating the result of the operation (e.g., success or user exit).
-     */
-    Status SelectItemToArchive(std::filesystem::directory_entry* location){
-        Status status = Success;
-        auto selectedLocation = GetCurrentLocation();
-        uint32_t id = 0;
-        std::string x;
-    
-        do{
-            PrintHelp();
-            this->GetCurrentLocationContent();
-            std::cout << this->GetCurrentLocationPath() << ":" << std::endl;
-            this->PrintCurrentLocationContent();
-    
-            if (!(std::cin >> x)) {
-                std::cin.clear(); // Clear the error flag
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Discard invalid input
-                debug_print("Invalid input. Please try again.");
-                continue;
-            }
-    
-            if(x == "A"){
-                break;
-            }
-            else if(x == "X") {
-                debug_print("User requested exit.");   
-                status = UserExit;
-                break;
-            }
-            else {
-                try{
-                    int id_temp = std::stoi(x);
-                    if(id_temp < 0 || static_cast<size_t>(id_temp) >= this->LocationContent.size()) {
-                        debug_print("Invalid selection");
-                        continue;
-                    }
-                    id = static_cast<uint32_t>(id_temp);
-                } catch (const std::out_of_range& e) {
-                    debug_print("Invalid input: number out of range");
-                    continue;
-                } catch (const std::invalid_argument& e) {
-                    debug_print("Invalid input: not a number");
-                    continue;
-                } catch (const std::exception& e) {
-                    debug_print("Invalid input: ", e.what());
-                    continue;
-                }
-    
-                selectedLocation = GetLocationItembyId(id);
-                if(selectedLocation.is_directory()){
-                    MoveToLocation(selectedLocation);
-                }
-                else{
-                    debug_print("Selected item is a file: ", selectedLocation.path());
-                    break;
-                }
-            }
-        } while(true);
-    
-        SetCurrentLocation(selectedLocation);
-    
-        if(location != nullptr) *location = this->CurrentLocation;
-    
-        return status;
-    }
-
-    std::filesystem::directory_entry GetLocation() {
-        return this->CurrentLocation;
-    } 
 };
 
 Explorer::Explorer() : pImpl(std::make_unique<Impl>()) {}

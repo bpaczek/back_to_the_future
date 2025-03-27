@@ -54,6 +54,15 @@ Status pack_mode(){
     return status;
 }
 
+/**
+ * @brief Unpacks the contents of an archive file.
+ * 
+ * This function initializes an Archiver object and uses it to extract the 
+ * contents of the specified archive file.
+ * 
+ * @param file_name The name of the archive file to be unpacked.
+ * @return Status The result of the extraction operation.
+ */
 Status unpack_mode(std::string file_name){
     auto archive = Archiver();
     return archive.Extract(file_name);
