@@ -1,3 +1,6 @@
+#ifndef EXPLORER_H
+#define EXPLORER_H
+
 #include <filesystem>
 #include <string>
 #include <vector>
@@ -23,6 +26,8 @@ class Explorer{
         std::filesystem::directory_entry CurrentLocation;
         std::vector<std::filesystem::directory_entry> LocationContent;
 
-        /* private functions */
+        /* private methods */
         void SetCurrentLocation(std::filesystem::directory_entry location);        
 };
+
+#endif

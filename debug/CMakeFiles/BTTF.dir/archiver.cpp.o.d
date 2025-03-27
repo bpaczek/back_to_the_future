@@ -199,6 +199,11 @@ CMakeFiles/BTTF.dir/archiver.cpp.o: /home/bartek/navtor/archiver.cpp \
  /usr/include/c++/13/fstream \
  /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \
- /usr/include/c++/13/bits/fstream.tcc /home/bartek/navtor/logs.h \
- /usr/include/c++/13/iostream \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h
+ /usr/include/c++/13/bits/fstream.tcc /home/bartek/navtor/status.h \
+ /home/bartek/navtor/logs.h /usr/include/c++/13/iostream \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h /usr/include/memory.h \
+ /usr/include/string.h /usr/include/strings.h /usr/include/c++/13/vector \
+ /usr/include/c++/13/bits/stl_uninitialized.h \
+ /usr/include/c++/13/bits/stl_vector.h \
+ /usr/include/c++/13/bits/stl_bvector.h \
+ /usr/include/c++/13/bits/vector.tcc

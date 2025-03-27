@@ -4,6 +4,7 @@
 CMakeFiles/BTTF.dir/archiver.cpp.o: /home/bartek/navtor/archiver.cpp \
   /home/bartek/navtor/archiver.h \
   /home/bartek/navtor/logs.h \
+  /home/bartek/navtor/status.h \
   /usr/include/alloca.h \
   /usr/include/archive.h \
   /usr/include/archive_entry.h \
@@ -72,12 +73,15 @@ CMakeFiles/BTTF.dir/archiver.cpp.o: /home/bartek/navtor/archiver.cpp \
   /usr/include/c++/13/bits/sstream.tcc \
   /usr/include/c++/13/bits/std_abs.h \
   /usr/include/c++/13/bits/stl_algobase.h \
+  /usr/include/c++/13/bits/stl_bvector.h \
   /usr/include/c++/13/bits/stl_construct.h \
   /usr/include/c++/13/bits/stl_function.h \
   /usr/include/c++/13/bits/stl_iterator.h \
   /usr/include/c++/13/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/13/bits/stl_iterator_base_types.h \
   /usr/include/c++/13/bits/stl_pair.h \
+  /usr/include/c++/13/bits/stl_uninitialized.h \
+  /usr/include/c++/13/bits/stl_vector.h \
   /usr/include/c++/13/bits/streambuf.tcc \
   /usr/include/c++/13/bits/streambuf_iterator.h \
   /usr/include/c++/13/bits/string_view.tcc \
@@ -86,6 +90,7 @@ CMakeFiles/BTTF.dir/archiver.cpp.o: /home/bartek/navtor/archiver.cpp \
   /usr/include/c++/13/bits/uses_allocator.h \
   /usr/include/c++/13/bits/uses_allocator_args.h \
   /usr/include/c++/13/bits/utility.h \
+  /usr/include/c++/13/bits/vector.tcc \
   /usr/include/c++/13/cctype \
   /usr/include/c++/13/cerrno \
   /usr/include/c++/13/clocale \
@@ -130,6 +135,7 @@ CMakeFiles/BTTF.dir/archiver.cpp.o: /home/bartek/navtor/archiver.cpp \
   /usr/include/c++/13/tuple \
   /usr/include/c++/13/type_traits \
   /usr/include/c++/13/typeinfo \
+  /usr/include/c++/13/vector \
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
@@ -144,12 +150,15 @@ CMakeFiles/BTTF.dir/archiver.cpp.o: /home/bartek/navtor/archiver.cpp \
   /usr/include/linux/stddef.h \
   /usr/include/linux/types.h \
   /usr/include/locale.h \
+  /usr/include/memory.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/time.h \
   /usr/include/unistd.h \
   /usr/include/wchar.h \
@@ -492,6 +501,7 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
   /home/bartek/navtor/archiver.h \
   /home/bartek/navtor/explorer.h \
   /home/bartek/navtor/logs.h \
+  /home/bartek/navtor/status.h \
   /usr/include/alloca.h \
   /usr/include/archive.h \
   /usr/include/archive_entry.h \
@@ -755,19 +765,21 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /home/bartek/navtor/main.cpp:
 
-/usr/include/c++/13/vector:
-
-/usr/include/c++/13/bits/vector.tcc:
-
-/usr/include/c++/13/bits/stl_bvector.h:
-
 /home/bartek/navtor/explorer.h:
 
 /home/bartek/navtor/explorer.cpp:
 
-/usr/include/c++/13/system_error:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h:
 
-/usr/include/c++/13/bits/range_access.h:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
+
+/usr/include/x86_64-linux-gnu/sys/types.h:
+
+/usr/include/x86_64-linux-gnu/sys/stat.h:
+
+/usr/include/x86_64-linux-gnu/sys/single_threaded.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
 /usr/include/c++/13/pstl/pstl_config.h:
 
@@ -776,8 +788,6 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 /usr/include/c++/13/bits/streambuf_iterator.h:
 
 /usr/include/c++/13/istream:
-
-/usr/include/c++/13/iomanip:
 
 /usr/include/c++/13/bits/uses_allocator.h:
 
@@ -823,13 +833,11 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /usr/include/c++/13/cstdlib:
 
+/usr/include/c++/13/bits/vector.tcc:
+
 /usr/include/c++/13/bits/stl_function.h:
 
 /usr/include/c++/13/bits/uses_allocator_args.h:
-
-/usr/include/c++/13/bits/stl_uninitialized.h:
-
-/usr/include/c++/13/bits/new_allocator.h:
 
 /usr/include/x86_64-linux-gnu/bits/long-double.h:
 
@@ -847,6 +855,12 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /usr/include/c++/13/bits/streambuf.tcc:
 
+/usr/include/c++/13/bits/new_allocator.h:
+
+/usr/include/c++/13/bits/stl_uninitialized.h:
+
+/usr/include/c++/13/locale:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
 
 /usr/include/asm-generic/errno.h:
@@ -856,6 +870,10 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h:
+
+/usr/include/c++/13/bits/stl_bvector.h:
+
+/usr/include/c++/13/bits/allocator.h:
 
 /usr/include/c++/13/bits/stl_algobase.h:
 
@@ -867,17 +885,31 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
 
-/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
+/usr/include/c++/13/stdexcept:
+
+/usr/include/c++/13/bits/range_access.h:
+
+/usr/include/c++/13/system_error:
 
 /usr/include/c++/13/bits/string_view.tcc:
 
-/usr/include/c++/13/stdexcept:
+/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
 
 /usr/include/c++/13/bits/quoted_string.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h:
+
+/usr/include/c++/13/new:
+
+/usr/include/c++/13/ext/alloc_traits.h:
+
+/usr/include/inttypes.h:
+
+/usr/include/c++/13/bits/std_abs.h:
+
+/usr/include/c++/13/bits/parse_numbers.h:
 
 /usr/include/c++/13/bits/fs_ops.h:
 
@@ -895,20 +927,6 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /usr/include/c++/13/bits/locale_facets.h:
 
-/usr/include/c++/13/bits/localefwd.h:
-
-/usr/include/c++/13/bits/ptr_traits.h:
-
-/usr/include/linux/posix_types.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h:
-
-/usr/include/c++/13/ext/alloc_traits.h:
-
-/usr/include/c++/13/new:
-
-/usr/include/inttypes.h:
-
 /usr/include/c++/13/ios:
 
 /usr/include/c++/13/bits/allocated_ptr.h:
@@ -917,13 +935,13 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /usr/include/c++/13/bits/basic_string.tcc:
 
-/usr/include/c++/13/bits/codecvt.h:
-
 /usr/include/c++/13/bits/stringfwd.h:
 
 /usr/include/c++/13/backward/binders.h:
 
 /home/bartek/navtor/archiver.cpp:
+
+/usr/include/c++/13/bits/codecvt.h:
 
 /usr/include/c++/13/ext/aligned_buffer.h:
 
@@ -934,6 +952,14 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 /usr/include/c++/13/bits/utility.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
+
+/home/bartek/navtor/status.h:
+
+/usr/include/c++/13/iomanip:
+
+/usr/include/strings.h:
+
+/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
 
 /usr/include/alloca.h:
 
@@ -967,7 +993,9 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /usr/include/c++/13/bits/cxxabi_forced.h:
 
-/usr/include/x86_64-linux-gnu/sys/types.h:
+/usr/include/x86_64-linux-gnu/sys/select.h:
+
+/usr/include/c++/13/cwchar:
 
 /usr/include/c++/13/bits/basic_ios.tcc:
 
@@ -975,15 +1003,7 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h:
 
-/usr/include/c++/13/tuple:
-
-/usr/include/c++/13/bits/nested_exception.h:
-
 /usr/include/c++/13/bits/cpp_type_traits.h:
-
-/usr/include/c++/13/string:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
 /usr/include/x86_64-linux-gnu/bits/types.h:
 
@@ -1005,6 +1025,14 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /usr/include/asm-generic/errno-base.h:
 
+/usr/include/c++/13/bits/localefwd.h:
+
+/usr/include/c++/13/bits/ptr_traits.h:
+
+/usr/include/linux/posix_types.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h:
+
 /usr/include/c++/13/bits/cxxabi_init_exception.h:
 
 /usr/include/c++/13/bits/exception.h:
@@ -1023,23 +1051,15 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /usr/include/errno.h:
 
-/usr/include/c++/13/string_view:
-
-/usr/include/features-time64.h:
-
 /usr/include/c++/13/bits/hash_bytes.h:
 
 /usr/include/c++/13/bits/ios_base.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h:
 
-/usr/include/c++/13/locale:
-
 /usr/include/c++/13/bits/ostream.tcc:
 
 /usr/include/c++/13/bits/fs_dir.h:
-
-/usr/include/c++/13/bits/allocator.h:
 
 /usr/include/c++/13/bits/stl_vector.h:
 
@@ -1067,13 +1087,21 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /usr/include/wchar.h:
 
-/usr/include/c++/13/bits/std_abs.h:
+/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
-/usr/include/c++/13/bits/parse_numbers.h:
+/usr/include/c++/13/string:
+
+/usr/include/c++/13/string_view:
+
+/usr/include/features-time64.h:
+
+/usr/include/c++/13/bits/nested_exception.h:
+
+/usr/include/c++/13/tuple:
 
 /usr/include/c++/13/type_traits:
 
-/usr/include/x86_64-linux-gnu/sys/single_threaded.h:
+/usr/include/c++/13/vector:
 
 /usr/include/ctype.h:
 
@@ -1095,6 +1123,8 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /usr/include/linux/types.h:
 
+/usr/include/memory.h:
+
 /usr/include/pthread.h:
 
 /usr/include/wctype.h:
@@ -1107,17 +1137,17 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /usr/include/stdint.h:
 
-/usr/include/c++/13/bits/stl_iterator_base_types.h:
-
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h:
+
+/usr/include/c++/13/bits/stl_iterator_base_types.h:
 
 /usr/include/stdio.h:
 
 /usr/include/stdlib.h:
 
-/usr/include/c++/13/cwchar:
+/usr/include/string.h:
 
-/usr/include/x86_64-linux-gnu/sys/select.h:
+/usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h:
 
 /usr/include/x86_64-linux-gnu/asm/errno.h:
 
@@ -1189,8 +1219,6 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/types/FILE.h:
 
-/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
-
 /usr/include/x86_64-linux-gnu/bits/select.h:
 
 /usr/include/x86_64-linux-gnu/bits/time.h:
@@ -1253,8 +1281,6 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/atomic_word.h:
 
-/usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h:
-
 /usr/include/c++/13/typeinfo:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h:
@@ -1274,11 +1300,3 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
 /usr/include/x86_64-linux-gnu/c++/13/bits/gthr-default.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
-
-/usr/include/x86_64-linux-gnu/sys/stat.h:
-
-/usr/include/x86_64-linux-gnu/sys/cdefs.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h:

@@ -5,6 +5,7 @@ CMakeFiles/BTTF.dir/archiver.cpp.o
  /home/bartek/navtor/archiver.cpp
  /home/bartek/navtor/archiver.h
  /home/bartek/navtor/logs.h
+ /home/bartek/navtor/status.h
  /usr/include/alloca.h
  /usr/include/archive.h
  /usr/include/archive_entry.h
@@ -73,12 +74,15 @@ CMakeFiles/BTTF.dir/archiver.cpp.o
  /usr/include/c++/13/bits/sstream.tcc
  /usr/include/c++/13/bits/std_abs.h
  /usr/include/c++/13/bits/stl_algobase.h
+ /usr/include/c++/13/bits/stl_bvector.h
  /usr/include/c++/13/bits/stl_construct.h
  /usr/include/c++/13/bits/stl_function.h
  /usr/include/c++/13/bits/stl_iterator.h
  /usr/include/c++/13/bits/stl_iterator_base_funcs.h
  /usr/include/c++/13/bits/stl_iterator_base_types.h
  /usr/include/c++/13/bits/stl_pair.h
+ /usr/include/c++/13/bits/stl_uninitialized.h
+ /usr/include/c++/13/bits/stl_vector.h
  /usr/include/c++/13/bits/streambuf.tcc
  /usr/include/c++/13/bits/streambuf_iterator.h
  /usr/include/c++/13/bits/string_view.tcc
@@ -87,6 +91,7 @@ CMakeFiles/BTTF.dir/archiver.cpp.o
  /usr/include/c++/13/bits/uses_allocator.h
  /usr/include/c++/13/bits/uses_allocator_args.h
  /usr/include/c++/13/bits/utility.h
+ /usr/include/c++/13/bits/vector.tcc
  /usr/include/c++/13/cctype
  /usr/include/c++/13/cerrno
  /usr/include/c++/13/clocale
@@ -131,6 +136,7 @@ CMakeFiles/BTTF.dir/archiver.cpp.o
  /usr/include/c++/13/tuple
  /usr/include/c++/13/type_traits
  /usr/include/c++/13/typeinfo
+ /usr/include/c++/13/vector
  /usr/include/ctype.h
  /usr/include/endian.h
  /usr/include/errno.h
@@ -145,12 +151,15 @@ CMakeFiles/BTTF.dir/archiver.cpp.o
  /usr/include/linux/stddef.h
  /usr/include/linux/types.h
  /usr/include/locale.h
+ /usr/include/memory.h
  /usr/include/pthread.h
  /usr/include/sched.h
  /usr/include/stdc-predef.h
  /usr/include/stdint.h
  /usr/include/stdio.h
  /usr/include/stdlib.h
+ /usr/include/string.h
+ /usr/include/strings.h
  /usr/include/time.h
  /usr/include/unistd.h
  /usr/include/wchar.h
@@ -495,6 +504,7 @@ CMakeFiles/BTTF.dir/main.cpp.o
  /home/bartek/navtor/archiver.h
  /home/bartek/navtor/explorer.h
  /home/bartek/navtor/logs.h
+ /home/bartek/navtor/status.h
  /usr/include/alloca.h
  /usr/include/archive.h
  /usr/include/archive_entry.h

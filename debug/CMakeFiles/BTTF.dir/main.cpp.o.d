@@ -204,4 +204,4 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
  /usr/include/c++/13/fstream \
  /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \
- /usr/include/c++/13/bits/fstream.tcc
+ /usr/include/c++/13/bits/fstream.tcc /home/bartek/navtor/status.h

@@ -1,5 +1,7 @@
 #include "archiver.h"
 #include "logs.h"
+#include <memory.h>
+#include <vector>
 
 #define DATA_BLOCK_SIZE 0x4000
 
@@ -13,12 +15,12 @@ Archiver::Archiver(std::string filename){
         throw std::runtime_error("Failed to open archive file");
     }
 
-    this->CurrentLocation = filename;
+    CurrentLocation = filename;
 
     try{
-        this->ArchiveFile.open(filename, std::ios::in | std::ios::binary);
+        FileWithArchive.open(filename, std::ios::in | std::ios::binary);
     
-        if(!this->ArchiveFile.is_open()){
+        if(!FileWithArchive.is_open()){
              debug_print("Failed to open file", this->CurrentLocation);
         }
     }
@@ -28,85 +30,109 @@ Archiver::Archiver(std::string filename){
     }
 }
 
-void Archiver::Extract(std::string location){
-    struct archive *a;
-    struct archive *ext;
-    struct archive_entry *entry;
-    int flags = ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM | ARCHIVE_EXTRACT_FFLAGS;
-    int error_code;
+Status Archiver::ArchiveEntries(archive_entry* entry){
+    Status status = Success;
+    int error_code = 0;
 
-    /* archive reader configuration */
-    a = archive_read_new();
-    archive_read_support_filter_all(a);
-    archive_read_support_format_all(a);
-
-    /* configure creating elements on disk */
-    ext = archive_write_disk_new();
-    archive_write_disk_set_options(ext, flags);
-    archive_write_disk_set_standard_lookup(ext);
-
-    if ((error_code = archive_read_open_filename(a, location.c_str(), DATA_BLOCK_SIZE))) {
-        debug_print("Failed to open archive file", location);
-        throw std::runtime_error("Failed to open archive file");
-    }
-
-    do {
-        error_code = archive_read_next_header(a, &entry);
+    while(archive_entry_size(entry) > 0){
+        const void *buff;
+        size_t size;
+        la_int64_t offset;
+        error_code = archive_read_data_block(ArchiveReader, (const void **)&buff, &size, &offset);
         if (error_code == ARCHIVE_EOF){
             break;
         }
         if (error_code < ARCHIVE_OK){
-            debug_print("Failed to read archive header", archive_error_string(a));
+            debug_print("Failed to read archive data", archive_error_string(ArchiveReader));
+            break;
         }
-        if (error_code < ARCHIVE_WARN){
-            debug_print("Failed to read archive header", archive_error_string(a));
+        error_code = archive_write_data_block(ArchiveFile, buff, size, offset);
+        if (error_code < ARCHIVE_OK){
+            debug_print("Failed to write archive data", archive_error_string(ArchiveFile));
+            break;
+        }
+        debug_print("Error finishing entry for", archive_entry_pathname(entry), ":", archive_error_string(ArchiveFile));
+    }
+
+    error_code = archive_write_finish_entry(ArchiveFile);
+    if (error_code < ARCHIVE_OK){
+        debug_print(archive_error_string(ArchiveFile));
+        status = AccessFileFailed;
+    }
+
+    return status;
+}
+Status Archiver::Extract(std::string location){
+    struct archive_entry *entry;
+    int flags = ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM | ARCHIVE_EXTRACT_FFLAGS;
+    int error_code;
+    Status status = Success;
+
+    /* archive reader configuration */
+    ArchiveReader = archive_read_new();
+    archive_read_support_filter_all(ArchiveReader);
+    archive_read_support_format_all(ArchiveReader);
+
+    /* configure creating elements on disk */
+    ArchiveReader = archive_write_disk_new();
+    archive_write_disk_set_options(ArchiveReader, flags);
+    archive_write_disk_set_standard_lookup(ArchiveReader);
+    
+    error_code = archive_read_open_filename(ArchiveReader, location.c_str(), DATA_BLOCK_SIZE);
+    if(error_code != ARCHIVE_OK) {
+        debug_print("Failed to open archive file", location);
+        return CannotOpenFile;
+    }
+
+    do {
+        error_code = archive_read_next_header(ArchiveReader, &entry);
+        if (error_code == ARCHIVE_EOF){
+            break;
+        }
+        if (error_code < ARCHIVE_OK){
+            status = AccessFileFailed;
+            debug_print("Failed to read archive header", archive_error_string(ArchiveReader));
             break;
         }
 
-        error_code = archive_write_header(ext, entry);
+        error_code = archive_write_header(ArchiveReader, entry);
         if (error_code < ARCHIVE_OK){
             debug_print("Failed to write archive header", location);
+            status = AccessFileFailed;
+            break;
         }
-        else if(archive_entry_size(entry) > 0){
-            while(true){
-                const void *buff;
-                size_t size;
-                la_int64_t offset;
-                error_code = archive_read_data_block(a, (const void **)&buff, &size, &offset);
-                if (error_code == ARCHIVE_EOF){
-                    break;
-                }
-                if (error_code < ARCHIVE_OK){
-                    debug_print("Failed to read archive data", archive_error_string(a));
-                }
-                error_code = archive_write_data_block(ext, buff, size, offset);
-                if (error_code < ARCHIVE_OK){
-                    debug_print("Failed to write archive data", archive_error_string(a));
-                }
-            }
-            error_code = archive_write_finish_entry(ext);
-            if (error_code < ARCHIVE_OK){
-                debug_print(archive_error_string(ext));
-                break;
-            }
-            if (error_code < ARCHIVE_WARN){
-                debug_print(archive_error_string(ext));
-                break;
-            }
+
+        status = ArchiveEntries(entry);
+        if(status != Success){
+            debug_print("ArchiveEntries finished with status", status);
         }
     } while(true);
 
-    archive_read_close(a);
-    archive_read_free(a);
-    archive_write_close(ext);
-    archive_write_free(ext);
+    /* clean up */
+    archive_read_close(ArchiveReader);
+    archive_read_free(ArchiveReader);
+    archive_write_close(ArchiveFile);
+    archive_write_free(ArchiveFile);
+
+    return Success;
 }
 
 void Archiver::AddFile(std::string location){
     /* Create new entry to archive */
     struct archive_entry *entry = archive_entry_new();
     /* Remove leading part of path and set the pathname in the archive */
-    auto locationInArchive = location.substr(this->PathOfItemToArchive.length());
+    std::string locationInArchive;
+    if (location.find(this->PathOfItemToArchive) == 0) {
+        locationInArchive = location.substr(this->PathOfItemToArchive.length());
+    } else {
+    try {
+        archive_entry_set_size(entry, fs::file_size(location));
+    } catch (const std::filesystem::filesystem_error& e) {
+        debug_print("Failed to get file size for", location, ":", e.what());
+        archive_entry_set_size(entry, 0); // Set size to 0 as a fallback
+    }
+        locationInArchive = location; // Fallback to using the full path
+    }
     debug_print("Adding file to archive:", locationInArchive);
     archive_entry_set_pathname(entry, locationInArchive.c_str());
 
@@ -116,14 +142,37 @@ void Archiver::AddFile(std::string location){
     /* set permissions */
     archive_entry_set_perm(entry, 0644); //consider to change to 0777
     
-    archive_write_header(a, entry);
-    char buff[DATA_BLOCK_SIZE];
-    std::ifstream file(location, std::ios::binary);
-    /* Write data to the archive as long as the stream does not have any error flags set, such as end-of-file, fail, or bad. */
-    while (file.good()) {
-        file.read(buff, sizeof(buff));
-        archive_write_data(a, buff, file.gcount());
+    bool success = true;
+
+    if (archive_write_header(a, entry) != ARCHIVE_OK) {
+        debug_print("Failed to write archive header for", location, ":", archive_error_string(a));
+        success = false;
+    } else {
+        char buff[DATA_BLOCK_SIZE];
+        memset(buff, 0, sizeof(buff));
+	    std::ifstream file(location, std::ios::binary);
+
+        while (file.is_open()) {
+            file.read(buff, sizeof(buff));
+            std::streamsize bytesRead = file.gcount();
+            if (bytesRead > 0) {
+                if (archive_write_data(a, buff, bytesRead) < ARCHIVE_OK) {
+                    debug_print("Failed to write data for", location, ":", archive_error_string(a));
+                    success = false;
+                    break;
+                }
+            }
+            if (file.eof()) {
+                break;
+            }
+            if (file.fail() && !file.eof()) {
+                debug_print("Error reading file:", location);
+                success = false;
+                break;
+            }
+        }
     }
+
     archive_entry_free(entry);
 }
 
@@ -132,10 +181,36 @@ void Archiver::AddFile(fs::directory_entry location){
 }
 
 void Archiver::AddDirectory(fs::directory_entry location){
-    for (const auto& entry : fs::recursive_directory_iterator(location)) {
-        if (fs::is_regular_file(entry)) {
-            this->AddFile(entry.path());
+    //To speed up processing, we will add files in chunks instead of accessing to the file system for each file
+    std::vector<fs::directory_entry> filesToArchive;
+    const size_t maxNumberFilesInchunk = 100;
+
+    for (const auto& entry : fs::recursive_directory_iterator(location, std::filesystem::directory_options::skip_permission_denied)) {
+        if (std::filesystem::is_regular_file(std::filesystem::symlink_status(entry))) {
+            if (filesToArchive.size() >= maxNumberFilesInchunk) {
+                for (const auto& filePath : filesToArchive) {
+                    this->AddFile(filePath);
+                }
+                filesToArchive.clear();
+            }
+            else {
+                filesToArchive.push_back(entry);
+            }
         }
+    }
+
+    //If there are any files left in the vector, process them and clear vector
+    if(filesToArchive.size() > 0){
+        debug_print("Processing remaining files in the buffer", filesToArchive.size());
+        for (const auto& filePath : filesToArchive) {
+            this->AddFile(filePath);
+        }
+        filesToArchive.clear();
+    }
+
+    // Process any remaining files in the batch
+    for (const auto& filePath : filesToArchive) {
+        this->AddFile(filePath);
     }
 }
 
@@ -160,7 +235,14 @@ Archiver::~Archiver(){
         archive_write_close(a);
         archive_write_free(a);
     }
-    if(this->ArchiveFile.is_open()){
-        this->ArchiveFile.close();
+
+    if(FileWithArchive.is_open()){
+        FileWithArchive.close();
+    }
+
+    if(ArchiveFile != nullptr)
+    {
+        archive_write_close(ArchiveFile);
+        archive_write_free(ArchiveFile);
     }
 }
