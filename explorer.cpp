@@ -120,7 +120,7 @@ Status Explorer::SelectItemToArchive(std::filesystem::directory_entry* location)
 
     SetCurrentLocation(selectedLocation);
 
-    if(location != nullptr) location = &this->CurrentLocation;
+    if(location != nullptr) *location = this->CurrentLocation;
 
     return status;
 }

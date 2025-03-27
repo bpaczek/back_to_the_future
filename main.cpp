@@ -20,6 +20,18 @@ enum Modes {
     UNDEFINED,
 };
 
+/**
+ * @brief Handles the packing mode by selecting an item to archive and processing it.
+ * 
+ * This function demonstrates two possible implementations of using the Archiver class:
+ * 1. Using the Archiver with an Explorer instance to manage the archive process.
+ * 2. Using the Archiver independently without an Explorer instance.
+ * 
+ * Note: The dual implementation is provided solely for the purpose of showcasing 
+ * the usage of interfaces in C++.
+ * 
+ * @return Status - Returns the status of the operation, either Success or UserExit.
+ */
 Status pack_mode(){
     Explorer explorer;
 
@@ -32,8 +44,8 @@ Status pack_mode(){
     debug_print("Selected item", entry.path());
 
     /// Possible use of Archiver with Explorer
-    // Status status = Success;
-    // auto archive = Archiver(&explorer);
+    //Status status = Success;
+    //auto archive = Archiver(&explorer);
 
     /// Possible use of Archiver without Explorer
     auto archive = new Archiver(DEFAULT_ARCHIVE_NAME);
