@@ -175,8 +175,8 @@ CMakeFiles/BTTF.dir/explorer.cpp.o: /home/bartek/navtor/explorer.cpp \
  /usr/include/c++/13/bits/fs_dir.h /usr/include/c++/13/bits/fs_ops.h \
  /home/bartek/navtor/logs.h /usr/include/c++/13/iostream \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h \
- /home/bartek/navtor/explorer.h /usr/include/c++/13/vector \
- /usr/include/c++/13/bits/stl_uninitialized.h \
+ /home/bartek/navtor/IExplorer.h /home/bartek/navtor/explorer.h \
+ /usr/include/c++/13/vector /usr/include/c++/13/bits/stl_uninitialized.h \
  /usr/include/c++/13/bits/stl_vector.h \
  /usr/include/c++/13/bits/stl_bvector.h \
  /usr/include/c++/13/bits/vector.tcc /home/bartek/navtor/status.h

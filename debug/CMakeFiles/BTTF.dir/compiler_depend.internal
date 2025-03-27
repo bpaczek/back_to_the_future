@@ -3,6 +3,7 @@
 
 CMakeFiles/BTTF.dir/archiver.cpp.o
  /home/bartek/navtor/archiver.cpp
+ /home/bartek/navtor/IExplorer.h
  /home/bartek/navtor/archiver.h
  /home/bartek/navtor/logs.h
  /home/bartek/navtor/status.h
@@ -271,6 +272,7 @@ CMakeFiles/BTTF.dir/archiver.cpp.o
 
 CMakeFiles/BTTF.dir/explorer.cpp.o
  /home/bartek/navtor/explorer.cpp
+ /home/bartek/navtor/IExplorer.h
  /home/bartek/navtor/explorer.h
  /home/bartek/navtor/logs.h
  /home/bartek/navtor/status.h
@@ -502,6 +504,7 @@ CMakeFiles/BTTF.dir/explorer.cpp.o
 
 CMakeFiles/BTTF.dir/main.cpp.o
  /home/bartek/navtor/main.cpp
+ /home/bartek/navtor/IExplorer.h
  /home/bartek/navtor/archiver.h
  /home/bartek/navtor/explorer.h
  /home/bartek/navtor/logs.h

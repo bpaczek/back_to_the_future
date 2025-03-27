@@ -21,7 +21,8 @@ enum Modes {
 };
 
 Status pack_mode(){
-    auto explorer = Explorer();
+    Explorer explorer;
+
     std::filesystem::directory_entry entry; 
     auto stat = explorer.SelectItemToArchive(&entry);
     if(stat == UserExit){
@@ -30,10 +31,13 @@ Status pack_mode(){
         
     debug_print("Selected item", entry.path());
 
+    /// Possible use of Archiver with Explorer
+    // Status status = Success;
+    // auto archive = Archiver(&explorer);
+
+    /// Possible use of Archiver without Explorer
     auto archive = new Archiver(DEFAULT_ARCHIVE_NAME);
     Status status = archive->ArchiveItem(entry);
-    
-    delete archive;
 
     return status;
 }

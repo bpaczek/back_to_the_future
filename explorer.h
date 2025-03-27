@@ -5,10 +5,11 @@
 #include <string>
 #include <vector>
 #include "status.h"
+#include "IExplorer.h"
 
 namespace fs = std::filesystem;
 
-class Explorer{
+class Explorer : public IExplorer {
     public: 
     Explorer();
     Explorer(std::string location);
@@ -20,7 +21,7 @@ class Explorer{
     void MoveToLocation(std::filesystem::directory_entry location);
     std::filesystem::directory_entry GetLocationItembyId(uint32_t id);
     Status SelectItemToArchive(std::filesystem::directory_entry* location = nullptr);
-
+    std::filesystem::directory_entry GetLocation();
     private:
     std::filesystem::directory_entry CurrentLocation;
     std::vector<std::filesystem::directory_entry> LocationContent;

@@ -1,7 +1,7 @@
 #include <filesystem>
 #include <string>
 #include "logs.h"
-
+#include "IExplorer.h"
 #include "explorer.h"
 #include <stdint.h>
 
@@ -124,3 +124,7 @@ Status Explorer::SelectItemToArchive(std::filesystem::directory_entry* location)
 
     return status;
 }
+
+std::filesystem::directory_entry Explorer::GetLocation() {
+    return this->CurrentLocation;
+} 

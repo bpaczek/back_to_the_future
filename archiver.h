@@ -7,6 +7,7 @@
 #include <string>
 #include <fstream>
 #include "status.h"
+#include "IExplorer.h"
 
 namespace fs = std::filesystem;
 
@@ -14,6 +15,7 @@ class Archiver{
     public:
         Archiver();
         Archiver(std::string filename);
+        Archiver(IExplorer* explorer);
         ~Archiver();
 
         Status Extract(std::string location);

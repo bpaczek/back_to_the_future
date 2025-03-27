@@ -178,8 +178,8 @@ CMakeFiles/BTTF.dir/main.cpp.o: /home/bartek/navtor/main.cpp \
  /usr/include/c++/13/bits/stl_vector.h \
  /usr/include/c++/13/bits/stl_bvector.h \
  /usr/include/c++/13/bits/vector.tcc /home/bartek/navtor/status.h \
- /home/bartek/navtor/archiver.h /usr/include/archive.h \
- /usr/include/x86_64-linux-gnu/sys/stat.h \
+ /home/bartek/navtor/IExplorer.h /home/bartek/navtor/archiver.h \
+ /usr/include/archive.h /usr/include/x86_64-linux-gnu/sys/stat.h \
  /usr/include/x86_64-linux-gnu/bits/stat.h \
  /usr/include/x86_64-linux-gnu/bits/struct_stat.h \
  /usr/include/x86_64-linux-gnu/bits/statx.h /usr/include/linux/stat.h \
