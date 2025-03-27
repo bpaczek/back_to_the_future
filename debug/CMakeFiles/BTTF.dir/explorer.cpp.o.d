@@ -179,4 +179,4 @@ CMakeFiles/BTTF.dir/explorer.cpp.o: /home/bartek/navtor/explorer.cpp \
  /usr/include/c++/13/bits/stl_uninitialized.h \
  /usr/include/c++/13/bits/stl_vector.h \
  /usr/include/c++/13/bits/stl_bvector.h \
- /usr/include/c++/13/bits/vector.tcc
+ /usr/include/c++/13/bits/vector.tcc /home/bartek/navtor/status.h

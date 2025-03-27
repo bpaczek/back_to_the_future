@@ -271,6 +271,7 @@ CMakeFiles/BTTF.dir/archiver.cpp.o: /home/bartek/navtor/archiver.cpp \
 CMakeFiles/BTTF.dir/explorer.cpp.o: /home/bartek/navtor/explorer.cpp \
   /home/bartek/navtor/explorer.h \
   /home/bartek/navtor/logs.h \
+  /home/bartek/navtor/status.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \

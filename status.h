@@ -7,7 +7,8 @@ enum Status{
     CannotOpenFile,
     AccessFileFailed,
     WriteFailed,
-    TooManyArgs
+    TooManyArgs,
+    UserExit,
 };
 
 #endif

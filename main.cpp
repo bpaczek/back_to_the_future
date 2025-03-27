@@ -21,16 +21,19 @@ enum Modes {
 };
 
 Status pack_mode(){
-    auto explorer = new Explorer();
-    auto entry = explorer->SelectItemToArchive();
-    
+    auto explorer = Explorer();
+    std::filesystem::directory_entry entry; 
+    auto stat = explorer.SelectItemToArchive(&entry);
+    if(stat == UserExit){
+        return stat;
+    }
+        
     debug_print("Selected item", entry.path());
 
     auto archive = new Archiver(DEFAULT_ARCHIVE_NAME);
     Status status = archive->ArchiveItem(entry);
     
     delete archive;
-    delete explorer;
 
     return status;
 }
