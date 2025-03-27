@@ -3,6 +3,7 @@
 #include "explorer.h"
 #include "archiver.h"
 #include "status.h"
+#include "libarchive_wrapper.h"
 
 #define ARCHIVE_NAME_LOCATION 1
 const std::string DEFAULT_ARCHIVE_NAME = "archive.tar.gz";
@@ -33,6 +34,7 @@ enum Modes {
  * @return Status - Returns the status of the operation, either Success or UserExit.
  */
 Status pack_mode(){
+    auto libarchive = std::make_unique<LibArchiveWrapper>();
     Explorer explorer;
 
     std::filesystem::directory_entry entry; 
@@ -41,14 +43,14 @@ Status pack_mode(){
         return stat;
     }
         
-    debug_print("Selected item", entry.path());
+    debug_print("Selected item", entry.path());;
 
     /// Possible use of Archiver with Explorer
-    //Status status = Success;
-    //auto archive = Archiver(&explorer);
+    // Status status = Success;
+    // auto archive = Archiver(explorer, std::move(libarchive));
 
     /// Possible use of Archiver without Explorer
-    auto archive = new Archiver(DEFAULT_ARCHIVE_NAME);
+    auto archive = new Archiver(DEFAULT_ARCHIVE_NAME, std::move(libarchive));
     Status status = archive->ArchiveItem(entry);
 
     return status;
@@ -64,7 +66,8 @@ Status pack_mode(){
  * @return Status The result of the extraction operation.
  */
 Status unpack_mode(std::string file_name){
-    auto archive = Archiver();
+    auto libarchive = std::make_unique<LibArchiveWrapper>();
+    auto archive = Archiver(std::move(libarchive));
     return archive.Extract(file_name);
 }
 

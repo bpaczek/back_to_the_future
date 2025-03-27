@@ -5,30 +5,24 @@
 #include <filesystem>
 #include "status.h"
 #include "IExplorer.h"
+#include "ILibarchive_wrapper.h"
 
 namespace fs = std::filesystem;
 
 class Archiver {
 public:
-    // Konstruktor domyślny
-    Archiver();
+    Archiver(std::unique_ptr<ILibArchiveWrapper> libarchive);
+    Archiver(std::string filename, std::unique_ptr<ILibArchiveWrapper> libarchive);
+    Archiver(IExplorer& explorer, std::unique_ptr<ILibArchiveWrapper> libarchive);
 
-    // Konstruktor z nazwą pliku
-    Archiver(std::string filename);
-
-    // Konstruktor z obiektem IExplorer
-    Archiver(IExplorer* explorer);
-
-    // Destruktor
     ~Archiver();
 
-    // Metody publiczne
     Status Extract(std::string location);
     Status ArchiveItem(fs::directory_entry location);
 
 private:
-    class Impl; // Forward declaration klasy implementacyjnej
-    std::unique_ptr<Impl> pImpl; // Wskaźnik do implementacji
+    class Impl; 
+    std::unique_ptr<Impl> pImpl;
 };
 
 #endif // ARCHIVER_H

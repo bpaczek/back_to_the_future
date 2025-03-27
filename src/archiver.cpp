@@ -1,7 +1,6 @@
 #include "archiver.h"
+#include "ILibarchive_wrapper.h"
 #include "logs.h"
-#include <archive.h>
-#include <archive_entry.h>
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -15,7 +14,8 @@
  */
 class Archiver::Impl {
 public:
-    Impl() = default;
+    Impl(std::unique_ptr<ILibArchiveWrapper> libarchive)
+    : libarchive(std::move(libarchive)) {}
 
     /**
      * @brief Constructs an Archiver object and initializes the archive for writing.
@@ -33,24 +33,14 @@ public:
      * @note The XZ compression algorithm is chosen for its ability to produce
      *       archives with minimal size.
      */
-    Impl(std::string filename) {
-        Archive = archive_write_new();
-        archive_write_add_filter_xz(Archive);
-        archive_write_set_format_pax_restricted(Archive);
+    Impl(std::string filename, std::unique_ptr<ILibArchiveWrapper> libarchive)
+        : libarchive(std::move(libarchive)) {
+        Archive = this->libarchive->archive_write_new();
+        this->libarchive->archive_write_add_filter_xz(Archive);
+        this->libarchive->archive_write_set_format_pax_restricted(Archive);
 
-        try {
-            FileWithArchive.open(filename, std::ios::in | std::ios::binary);
-
-            if (!FileWithArchive.is_open()) {
-                debug_print("Failed to open file", filename);
-            }
-
-            if (archive_write_open_filename(Archive, filename.c_str()) != ARCHIVE_OK) {
-                debug_print("Failed to open archive file", filename);
-                throw std::runtime_error("Failed to open archive file");
-            }
-        } catch (const std::exception& e) {
-            debug_print("Failed to create an archive!", filename, ". ", e.what());
+        if (this->libarchive->archive_write_open_filename(Archive, filename.c_str()) != ARCHIVE_OK) {
+            throw std::runtime_error("Failed to open archive file");
         }
     }
 
@@ -61,7 +51,8 @@ public:
      * 
      * @param explorer A pointer to an IExplorer instance used to retrieve the location to be archived.
      */
-    Impl(IExplorer* explorer) : Impl("default_archive.tar.gz"){
+    Impl(IExplorer* explorer, std::unique_ptr<ILibArchiveWrapper> libarchive) 
+        : Impl("default_archive.tar.gz", std::move(libarchive)) {
         ArchiveItem(explorer->GetLocation());
     }
 
@@ -78,9 +69,14 @@ public:
      * allocated resources are released when the Archiver object is destroyed.
      */
     ~Impl() {
+        if (Archive) {
+            libarchive->archive_write_close(Archive);
+            libarchive->archive_write_free(Archive);
+        }
+
         if (Archive != nullptr) {
-            archive_write_close(Archive);
-            archive_write_free(Archive);
+            libarchive->archive_write_close(Archive);
+            libarchive->archive_write_free(Archive);
         }
 
         if (FileWithArchive.is_open()) {
@@ -88,8 +84,8 @@ public:
         }
 
         if (ArchiveFile != nullptr) {
-            archive_write_close(ArchiveFile);
-            archive_write_free(ArchiveFile);
+            libarchive->archive_write_close(ArchiveFile);
+            libarchive->archive_write_free(ArchiveFile);
         }
     }
 
@@ -154,24 +150,24 @@ public:
         std::cout << "Operation in progress... " << std::endl;
 
         /* archive reader configuration */
-        Archive = archive_read_new();
+        Archive = libarchive->archive_read_new();
         if(Archive == NULL){
             debug_print("Failed to create archive reader");
             return CriticalError;
         }
-        archive_read_support_filter_all(Archive);
-        archive_read_support_format_all(Archive);
+        libarchive->archive_read_support_filter_all(Archive);
+        libarchive->archive_read_support_format_all(Archive);
 
         /* configure creating elements on disk */
-        ArchiveFile = archive_write_disk_new();
+        ArchiveFile = libarchive->archive_write_disk_new();
         if(ArchiveFile == NULL){
             debug_print("Failed to create archive writer");
             return CriticalError;
         }
-        archive_write_disk_set_options(ArchiveFile, flags);
-        archive_write_disk_set_standard_lookup(ArchiveFile);
+        libarchive->archive_write_disk_set_options(ArchiveFile, flags);
+        libarchive->archive_write_disk_set_standard_lookup(ArchiveFile);
         
-        error_code = archive_read_open_filename(Archive, location.c_str(), DATA_BLOCK_SIZE);
+        error_code = libarchive->archive_read_open_filename(Archive, location.c_str(), DATA_BLOCK_SIZE);
         if(error_code != ARCHIVE_OK) {
             debug_print("Failed to open archive file", location);
             debug_print("error code: ", error_code);
@@ -179,17 +175,17 @@ public:
         }
 
         do {
-            error_code = archive_read_next_header(Archive, &entry);
+            error_code = libarchive->archive_read_next_header(Archive, &entry);
             if (error_code == ARCHIVE_EOF){
                 break;
             }
             if (error_code < ARCHIVE_OK){
                 status = AccessFileFailed;
-                debug_print("Failed to read archive header", archive_error_string(Archive));
+                debug_print("Failed to read archive header", libarchive->archive_error_string(Archive));
                 break;
             }
 
-            error_code = archive_write_header(ArchiveFile, entry);
+            error_code = libarchive->archive_write_header(ArchiveFile, entry);
             if (error_code < ARCHIVE_OK){
                 debug_print("Failed to write archive header", location);
                 status = AccessFileFailed;
@@ -205,18 +201,20 @@ public:
         std::cout << "Operation finished!" << std::endl;
 
         /* clean up */
-        archive_read_close(Archive);
-        archive_read_free(Archive);
+        libarchive->archive_read_close(Archive);
+        libarchive->archive_read_free(Archive);
         Archive = NULL;
-        archive_write_close(ArchiveFile);
-        archive_write_free(ArchiveFile);
+        libarchive->archive_write_close(ArchiveFile);
+        libarchive->archive_write_free(ArchiveFile);
         ArchiveFile = NULL;
 
         return Success;
     }
 
 private:
+    private:
     /* private fields */
+    std::unique_ptr<ILibArchiveWrapper> libarchive;
     struct archive* Archive = nullptr;
     struct archive* ArchiveFile = nullptr;
     std::ofstream FileWithArchive;
@@ -241,38 +239,38 @@ private:
     Status AddFile(std::string location){
         Status status = Success;
         /* Create new entry to archive */
-        struct archive_entry *entry = archive_entry_new();
+        struct archive_entry *entry = libarchive->archive_entry_new();
         /* Remove leading part of path and set the pathname in the archive */
         std::string locationInArchive;
         if (location.find(PathOfItemToArchive) == 0) {
             locationInArchive = location.substr(PathOfItemToArchive.length());
         } else {
         try {
-            archive_entry_set_size(entry, fs::file_size(location));
+            libarchive->archive_entry_set_size(entry, fs::file_size(location));
         } catch (const std::filesystem::filesystem_error& e) {
             debug_print("Failed to get file size for", location, ":", e.what());
-            archive_entry_set_size(entry, 0); // Set size to 0 as a fallback
+            libarchive->archive_entry_set_size(entry, 0); // Set size to 0 as a fallback
         }
             locationInArchive = location; // Fallback to using the full path
         }
         debug_print("Adding file to archive:", locationInArchive);
-        archive_entry_set_pathname(entry, locationInArchive.c_str());
+        libarchive->archive_entry_set_pathname(entry, locationInArchive.c_str());
 
-        archive_entry_set_size(entry, fs::file_size(location));
+        libarchive->archive_entry_set_size(entry, fs::file_size(location));
         /* Set archive entry properties */
-        archive_entry_set_filetype(entry, AE_IFREG);
+        libarchive->archive_entry_set_filetype(entry, AE_IFREG);
         /* set permissions */
-        archive_entry_set_perm(entry, 0644);
+        libarchive->archive_entry_set_perm(entry, 0644);
         
 
-        if (archive_write_header(Archive, entry) != ARCHIVE_OK) {
-            debug_print("Failed to write archive header for", location, ":", archive_error_string(Archive));
+        if (libarchive->archive_write_header(Archive, entry) != ARCHIVE_OK) {
+            debug_print("Failed to write archive header for", location, ":", libarchive->archive_error_string(Archive));
             status = WriteFailed;
         } else {
             status = WriteData(location);
         }
 
-        archive_entry_free(entry);
+        libarchive->archive_entry_free(entry);
 
         return status;
     }
@@ -301,9 +299,9 @@ private:
             std::streamsize bytesRead = file.gcount();
             if (bytesRead > 0)
             {
-                if (archive_write_data(Archive, buff, bytesRead) < ARCHIVE_OK)
+                if (libarchive->archive_write_data(Archive, buff, bytesRead) < ARCHIVE_OK)
                 {
-                    debug_print("Failed to write data for", location, ":", archive_error_string(Archive));
+                    debug_print("Failed to write data for", location, ":", libarchive->archive_error_string(Archive));
                     status = WriteFailed;
                     break;
                 }
@@ -436,25 +434,25 @@ private:
             const void *buff;
             size_t size;
             la_int64_t offset;
-            error_code = archive_read_data_block(Archive, (const void **)&buff, &size, &offset);
+            error_code = libarchive->archive_read_data_block(Archive, (const void **)&buff, &size, &offset);
             if (error_code == ARCHIVE_EOF){
                 break;
             }
             if (error_code < ARCHIVE_OK){
-                debug_print("Failed to read archive data", archive_error_string(Archive));
+                debug_print("Failed to read archive data", libarchive->archive_error_string(Archive));
                 break;
             }
             error_code = archive_write_data_block(ArchiveFile, buff, size, offset);
             if (error_code < ARCHIVE_OK){
-                debug_print("Failed to write archive data", archive_error_string(ArchiveFile));
+                debug_print("Failed to write archive data", libarchive->archive_error_string(ArchiveFile));
                 break;
             }
             debug_print("Finished", archive_entry_pathname(entry));
         }
 
-        error_code = archive_write_finish_entry(ArchiveFile);
+        error_code = libarchive->archive_write_finish_entry(ArchiveFile);
         if (error_code < ARCHIVE_OK){
-            debug_print(archive_error_string(ArchiveFile));
+            debug_print(libarchive->archive_error_string(ArchiveFile));
             status = AccessFileFailed;
         }
 
@@ -462,12 +460,12 @@ private:
     }
 };
 
-Archiver::Archiver() : pImpl(std::make_unique<Impl>()) {}
+Archiver::Archiver(std::unique_ptr<ILibArchiveWrapper> libarchive): pImpl(std::make_unique<Impl>(std::move(libarchive))){}
 
-Archiver::Archiver(std::string filename) : pImpl(std::make_unique<Impl>(filename)) {}
+Archiver::Archiver(std::string filename, std::unique_ptr<ILibArchiveWrapper> libarchive) : pImpl(std::make_unique<Impl>(filename, std::move(libarchive))){}
 
-Archiver::Archiver(IExplorer* explorer) : pImpl(std::make_unique<Impl>("default_archive.tar.gz")) {
-    pImpl->ArchiveItem(explorer->GetLocation());
+Archiver::Archiver(IExplorer& explorer, std::unique_ptr<ILibArchiveWrapper> libarchive) : pImpl(std::make_unique<Impl>("default_archive.tar.gz", std::move(libarchive))) {
+    pImpl->ArchiveItem(explorer.GetLocation());
 }
 
 Archiver::~Archiver() = default;

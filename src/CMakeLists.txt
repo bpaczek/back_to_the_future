@@ -3,11 +3,14 @@ add_executable(BTTF
     archiver.cpp
     explorer.cpp
     logs.cpp
+    libarchive_wrapper.cpp
 )
 
 set_target_properties(BTTF PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
 )
+
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
 FIND_PATH(archive_INCLUDE_DIR archive.h /usr/local/include)
 FIND_LIBRARY(archive_LIB libarchive.a /usr/local/lib)
