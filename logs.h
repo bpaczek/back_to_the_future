@@ -19,7 +19,7 @@ void debug_print(const std::string& format, Args... args) {
     }
     std::ostringstream stream;
     ((stream << args << " "), ...);
-    std::cout << format << ": " << stream.str() << std::endl;
+    std::cout << format << " " << stream.str() << std::endl;
 }
 
 #endif

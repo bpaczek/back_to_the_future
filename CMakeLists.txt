@@ -17,7 +17,7 @@ if(archive_INCLUDE_DIR AND archive_LIB)
   message(STATUS "Found libarchive")
   include_directories(${archive_INCLUDE_DIR})
   # target_link_libraries(BTTF ${archive_LIB})
-  target_link_libraries(BTTF PUBLIC ${archive_LIB} z bz2 lzma iconv xml2 crypto ssl nettle acl)
+  target_link_libraries(BTTF PUBLIC ${archive_LIB} z bz2 lzma iconv xml2 crypto ssl nettle acl lz4 zstd)
 
 else()
   message(FATAL_ERROR "libarchive not found")
@@ -29,5 +29,3 @@ if(DEBUG)
 else()
   set(CMAKE_BUILD_TYPE Release)
 endif()
-
-

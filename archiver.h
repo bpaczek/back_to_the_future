@@ -8,18 +8,19 @@ namespace fs = std::filesystem;
 
 class Archiver{
     public:
+        Archiver();
         Archiver(std::string filename);
         ~Archiver();
-        //Archiver(std::string location);
         void AddFile(std::string location);
         void AddFile(fs::directory_entry location);
         void AddDirectory(fs::directory_entry location);
         void ArchiveCurrentLocation();
-        void ExtractCurrentLocation();
-        void setCurrentLocation(std::string location);
+        void Extract(std::string location);
         std::string getCurrentLocation();
+        void ArchiveItem(fs::directory_entry location);
     private:
         std::string CurrentLocation;
         std::ifstream ArchiveFile;
         struct archive *a;
+        std::string PathOfItemToArchive;
 };
