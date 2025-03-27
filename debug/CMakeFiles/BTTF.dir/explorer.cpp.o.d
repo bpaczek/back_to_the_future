@@ -1,5 +1,6 @@
 CMakeFiles/BTTF.dir/explorer.cpp.o: /home/bartek/navtor/explorer.cpp \
- /usr/include/stdc-predef.h /usr/include/c++/13/filesystem \
+ /usr/include/stdc-predef.h /home/bartek/navtor/explorer.h \
+ /usr/include/c++/13/filesystem \
  /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
@@ -173,10 +174,18 @@ CMakeFiles/BTTF.dir/explorer.cpp.o: /home/bartek/navtor/explorer.cpp \
  /usr/include/c++/13/bits/unique_ptr.h \
  /usr/include/c++/13/ext/aligned_buffer.h \
  /usr/include/c++/13/bits/fs_dir.h /usr/include/c++/13/bits/fs_ops.h \
+ /usr/include/c++/13/memory /usr/include/c++/13/bits/stl_tempbuf.h \
+ /usr/include/c++/13/bits/stl_uninitialized.h \
+ /usr/include/c++/13/bits/stl_raw_storage_iter.h \
+ /usr/include/c++/13/bits/align.h \
+ /usr/include/c++/13/bits/shared_ptr_atomic.h \
+ /usr/include/c++/13/bits/atomic_base.h \
+ /usr/include/c++/13/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/13/backward/auto_ptr.h \
+ /usr/include/c++/13/pstl/glue_memory_defs.h \
+ /usr/include/c++/13/pstl/execution_defs.h /home/bartek/navtor/status.h \
  /home/bartek/navtor/logs.h /usr/include/c++/13/iostream \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h \
- /home/bartek/navtor/IExplorer.h /home/bartek/navtor/explorer.h \
- /usr/include/c++/13/vector /usr/include/c++/13/bits/stl_uninitialized.h \
- /usr/include/c++/13/bits/stl_vector.h \
+ /usr/include/c++/13/vector /usr/include/c++/13/bits/stl_vector.h \
  /usr/include/c++/13/bits/stl_bvector.h \
- /usr/include/c++/13/bits/vector.tcc /home/bartek/navtor/status.h
+ /usr/include/c++/13/bits/vector.tcc

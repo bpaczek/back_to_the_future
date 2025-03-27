@@ -175,19 +175,6 @@ tests/fast:
 .PHONY : tests/fast
 
 #=============================================================================
-# Target rules for targets named BTTF
-
-# Build rule for target.
-BTTF: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 BTTF
-.PHONY : BTTF
-
-# fast build rule for target.
-BTTF/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BTTF.dir/build.make CMakeFiles/BTTF.dir/build
-.PHONY : BTTF/fast
-
-#=============================================================================
 # Target rules for targets named gmock
 
 # Build rule for target.
@@ -197,7 +184,7 @@ gmock: cmake_check_build_system
 
 # fast build rule for target.
 gmock/fast:
-	$(MAKE) $(MAKESILENT) -f googletest/googlemock/CMakeFiles/gmock.dir/build.make googletest/googlemock/CMakeFiles/gmock.dir/build
+	$(MAKE) $(MAKESILENT) -f thirdparty/googletest/googlemock/CMakeFiles/gmock.dir/build.make thirdparty/googletest/googlemock/CMakeFiles/gmock.dir/build
 .PHONY : gmock/fast
 
 #=============================================================================
@@ -210,7 +197,7 @@ gmock_main: cmake_check_build_system
 
 # fast build rule for target.
 gmock_main/fast:
-	$(MAKE) $(MAKESILENT) -f googletest/googlemock/CMakeFiles/gmock_main.dir/build.make googletest/googlemock/CMakeFiles/gmock_main.dir/build
+	$(MAKE) $(MAKESILENT) -f thirdparty/googletest/googlemock/CMakeFiles/gmock_main.dir/build.make thirdparty/googletest/googlemock/CMakeFiles/gmock_main.dir/build
 .PHONY : gmock_main/fast
 
 #=============================================================================
@@ -223,7 +210,7 @@ gtest: cmake_check_build_system
 
 # fast build rule for target.
 gtest/fast:
-	$(MAKE) $(MAKESILENT) -f googletest/googletest/CMakeFiles/gtest.dir/build.make googletest/googletest/CMakeFiles/gtest.dir/build
+	$(MAKE) $(MAKESILENT) -f thirdparty/googletest/googletest/CMakeFiles/gtest.dir/build.make thirdparty/googletest/googletest/CMakeFiles/gtest.dir/build
 .PHONY : gtest/fast
 
 #=============================================================================
@@ -236,80 +223,34 @@ gtest_main: cmake_check_build_system
 
 # fast build rule for target.
 gtest_main/fast:
-	$(MAKE) $(MAKESILENT) -f googletest/googletest/CMakeFiles/gtest_main.dir/build.make googletest/googletest/CMakeFiles/gtest_main.dir/build
+	$(MAKE) $(MAKESILENT) -f thirdparty/googletest/googletest/CMakeFiles/gtest_main.dir/build.make thirdparty/googletest/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
-archiver.o: archiver.cpp.o
-.PHONY : archiver.o
+#=============================================================================
+# Target rules for targets named BTTF_src
 
-# target to build an object file
-archiver.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BTTF.dir/build.make CMakeFiles/BTTF.dir/archiver.cpp.o
-.PHONY : archiver.cpp.o
+# Build rule for target.
+BTTF_src: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 BTTF_src
+.PHONY : BTTF_src
 
-archiver.i: archiver.cpp.i
-.PHONY : archiver.i
+# fast build rule for target.
+BTTF_src/fast:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/BTTF_src.dir/build.make src/CMakeFiles/BTTF_src.dir/build
+.PHONY : BTTF_src/fast
 
-# target to preprocess a source file
-archiver.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BTTF.dir/build.make CMakeFiles/BTTF.dir/archiver.cpp.i
-.PHONY : archiver.cpp.i
+#=============================================================================
+# Target rules for targets named test_archiver
 
-archiver.s: archiver.cpp.s
-.PHONY : archiver.s
+# Build rule for target.
+test_archiver: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_archiver
+.PHONY : test_archiver
 
-# target to generate assembly for a file
-archiver.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BTTF.dir/build.make CMakeFiles/BTTF.dir/archiver.cpp.s
-.PHONY : archiver.cpp.s
-
-explorer.o: explorer.cpp.o
-.PHONY : explorer.o
-
-# target to build an object file
-explorer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BTTF.dir/build.make CMakeFiles/BTTF.dir/explorer.cpp.o
-.PHONY : explorer.cpp.o
-
-explorer.i: explorer.cpp.i
-.PHONY : explorer.i
-
-# target to preprocess a source file
-explorer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BTTF.dir/build.make CMakeFiles/BTTF.dir/explorer.cpp.i
-.PHONY : explorer.cpp.i
-
-explorer.s: explorer.cpp.s
-.PHONY : explorer.s
-
-# target to generate assembly for a file
-explorer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BTTF.dir/build.make CMakeFiles/BTTF.dir/explorer.cpp.s
-.PHONY : explorer.cpp.s
-
-main.o: main.cpp.o
-.PHONY : main.o
-
-# target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BTTF.dir/build.make CMakeFiles/BTTF.dir/main.cpp.o
-.PHONY : main.cpp.o
-
-main.i: main.cpp.i
-.PHONY : main.i
-
-# target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BTTF.dir/build.make CMakeFiles/BTTF.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BTTF.dir/build.make CMakeFiles/BTTF.dir/main.cpp.s
-.PHONY : main.cpp.s
+# fast build rule for target.
+test_archiver/fast:
+	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/test_archiver.dir/build.make test/CMakeFiles/test_archiver.dir/build
+.PHONY : test_archiver/fast
 
 test/test.o: test/test.cpp.o
 .PHONY : test/test.o
@@ -347,21 +288,13 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... BTTF"
+	@echo "... BTTF_src"
 	@echo "... gmock"
 	@echo "... gmock_main"
 	@echo "... gtest"
 	@echo "... gtest_main"
+	@echo "... test_archiver"
 	@echo "... tests"
-	@echo "... archiver.o"
-	@echo "... archiver.i"
-	@echo "... archiver.s"
-	@echo "... explorer.o"
-	@echo "... explorer.i"
-	@echo "... explorer.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
 	@echo "... test/test.o"
 	@echo "... test/test.i"
 	@echo "... test/test.s"

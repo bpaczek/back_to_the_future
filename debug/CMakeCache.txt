@@ -308,34 +308,34 @@ archive_INCLUDE_DIR:PATH=/usr/include
 archive_LIB:FILEPATH=/usr/lib/x86_64-linux-gnu/libarchive.a
 
 //Value Computed by CMake
-gmock_BINARY_DIR:STATIC=/home/bartek/navtor/debug/googletest/googlemock
+gmock_BINARY_DIR:STATIC=/home/bartek/navtor/debug/thirdparty/googletest/googlemock
 
 //Value Computed by CMake
 gmock_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
-gmock_SOURCE_DIR:STATIC=/home/bartek/navtor/googletest/googlemock
+gmock_SOURCE_DIR:STATIC=/home/bartek/navtor/thirdparty/googletest/googlemock
 
 //Build all of Google Mock's own tests.
 gmock_build_tests:BOOL=OFF
 
 //Value Computed by CMake
-googletest-distribution_BINARY_DIR:STATIC=/home/bartek/navtor/debug/googletest
+googletest-distribution_BINARY_DIR:STATIC=/home/bartek/navtor/debug/thirdparty/googletest
 
 //Value Computed by CMake
 googletest-distribution_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
-googletest-distribution_SOURCE_DIR:STATIC=/home/bartek/navtor/googletest
+googletest-distribution_SOURCE_DIR:STATIC=/home/bartek/navtor/thirdparty/googletest
 
 //Value Computed by CMake
-gtest_BINARY_DIR:STATIC=/home/bartek/navtor/debug/googletest/googletest
+gtest_BINARY_DIR:STATIC=/home/bartek/navtor/debug/thirdparty/googletest/googletest
 
 //Value Computed by CMake
 gtest_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
-gtest_SOURCE_DIR:STATIC=/home/bartek/navtor/googletest/googletest
+gtest_SOURCE_DIR:STATIC=/home/bartek/navtor/thirdparty/googletest/googletest
 
 //Build gtest's sample programs.
 gtest_build_samples:BOOL=OFF
@@ -492,7 +492,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=4
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=6
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -544,7 +544,7 @@ _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=/usr/local
 cmake_package_name:INTERNAL=GTest
-generated_dir:INTERNAL=/home/bartek/navtor/debug/googletest/googletest/generated
+generated_dir:INTERNAL=/home/bartek/navtor/debug/thirdparty/googletest/googletest/generated
 //ADVANCED property for variable: gmock_build_tests
 gmock_build_tests-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: gtest_build_samples
