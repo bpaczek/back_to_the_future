@@ -3,7 +3,6 @@ add_executable(BTTF
     archiver.cpp
     explorer.cpp
     logs.cpp
-    libarchive_wrapper.cpp
 )
 
 set_target_properties(BTTF PROPERTIES
