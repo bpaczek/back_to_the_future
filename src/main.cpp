@@ -5,21 +5,29 @@
 #include "status.h"
 #include "libarchive_wrapper.h"
 
-#define ARCHIVE_NAME_LOCATION 1
 const std::string DEFAULT_ARCHIVE_NAME = "archive.tar.gz";
 
+#define MAX_PARAM_NUMBERS 2
+
+enum Modes {
+    UNDEFINED,
+    PACK,
+    UNPACK
+};
+
+/**
+ * @brief Prints the help message for the program.
+ * 
+ * This function provides usage instructions for the program, including
+ * the available modes (archivization and unpacking) and their respective
+ * command-line arguments.
+ */
 void 
 print_help(){
     std::cout << "Usage:" << std::endl;
     std::cout << "BTTF for archivization mode" << std::endl;
     std::cout << "BTTF <archive_name> for unpack " << std::endl;
 }
-
-enum Modes {
-    PACK,
-    UNPACK,
-    UNDEFINED,
-};
 
 /**
  * @brief Handles the packing mode by selecting an item to archive and processing it.
@@ -77,10 +85,10 @@ main(int argc, char** argv){
     Modes mode = UNDEFINED;
     Status stat = Success;
 
-    if (argc > 3) {
+    if (argc > MAX_PARAM_NUMBERS) {
         debug_print("Too many arguments");
         stat = TooManyArgs;
-    } else if(argc == 2) {
+    } else if(argc == MAX_PARAM_NUMBERS) {
         mode = UNPACK;
         debug_print("Unpack mode");
     } else {
