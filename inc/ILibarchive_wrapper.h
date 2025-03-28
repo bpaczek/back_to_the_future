@@ -36,6 +36,9 @@ public:
     virtual struct archive* archive_write_disk_new() = 0;
     virtual int archive_write_finish_entry(struct archive* a) = 0;
     virtual int archive_read_close(struct archive* a) = 0;
+    virtual int64_t archive_entry_size(struct archive_entry* entry) = 0;
+    virtual const char* archive_entry_pathname(struct archive_entry* entry) = 0;
+    virtual int archive_write_data_block(struct archive* a, const void* buff, size_t size, int64_t offset) = 0;
 };
 
 #endif

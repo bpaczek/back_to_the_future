@@ -112,6 +112,18 @@ public:
     int archive_read_close(struct archive* a) {
         return ::archive_read_close(a);
     }
+
+    int64_t archive_entry_size(struct archive_entry* entry) {
+        return ::archive_entry_size(entry);
+    }
+    
+    const char* archive_entry_pathname(struct archive_entry* entry) {
+        return ::archive_entry_pathname(entry);
+    }
+    
+    int archive_write_data_block(struct archive* a, const void* buff, size_t size, int64_t offset) {
+        return ::archive_write_data_block(a, buff, size, offset);
+    }
 };
 
 #endif

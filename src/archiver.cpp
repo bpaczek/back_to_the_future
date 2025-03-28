@@ -427,7 +427,7 @@ private:
         Status status = Success;
         int error_code = 0;
 
-        while(archive_entry_size(entry) > 0){
+        while(libarchive->archive_entry_size(entry) > 0){
             const void *buff;
             size_t size;
             la_int64_t offset;
@@ -439,12 +439,12 @@ private:
                 debug_print("Failed to read archive data", libarchive->archive_error_string(Archive));
                 break;
             }
-            error_code = archive_write_data_block(ArchiveFile, buff, size, offset);
+            error_code = libarchive->archive_write_data_block(ArchiveFile, buff, size, offset);
             if (error_code < ARCHIVE_OK){
                 debug_print("Failed to write archive data", libarchive->archive_error_string(ArchiveFile));
                 break;
             }
-            debug_print("Finished", archive_entry_pathname(entry));
+            debug_print("Finished", libarchive->archive_entry_pathname(entry));
         }
 
         error_code = libarchive->archive_write_finish_entry(ArchiveFile);
