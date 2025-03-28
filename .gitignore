@@ -1,0 +1,11 @@
+/build/
+/libarchive/
+/debug/
+
+# Ignoruj pliki tymczasowe
+*.o
+*.obj
+*.log
+*.tmp
+*.swp
+*.out
